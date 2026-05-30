@@ -1,0 +1,848 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F2DDC6;
+    --brown: #612B2B;
+    --brown-mid: #B66034;
+    --yellow: #F3B12D;
+    --red: #FF4447;
+    --white: #FFFFFF;
+    --r: 14px;
+    --r-lg: 24px;
+    --r-sm: 10px;
+  }
+
+  body { font-family: 'Outfit', sans-serif; background: #1a1a1a; }
+
+  .proto-shell {
+    width: 100%;
+    min-height: 600px;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0 24px;
+  }
+
+  /* --- DEVICE SWITCHER --- */
+  .switcher {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    background: #2a2a2a;
+    border-radius: 40px;
+    padding: 5px;
+  }
+  .sw-btn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    background: transparent;
+    color: #888;
+  }
+  .sw-btn.active { background: var(--yellow); color: var(--brown); }
+
+  /* --- PAGE NAV BAR --- */
+  .page-nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 760px;
+  }
+  .pn-btn {
+    padding: 5px 10px;
+    border: 1.5px solid #444;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: #888;
+    transition: all .18s;
+    white-space: nowrap;
+  }
+  .pn-btn.active { background: var(--brown); color: var(--yellow); border-color: var(--brown); }
+  .pn-btn:hover:not(.active) { border-color: var(--yellow); color: var(--yellow); }
+
+  /* --- SCREEN FRAME --- */
+  .screen-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .screen {
+    background: var(--bg);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all .3s ease;
+    position: relative;
+  }
+  .screen.desktop { width: 760px; min-height: 520px; }
+  .screen.mobile { width: 340px; min-height: 620px; border-radius: 32px; border: 6px solid #333; }
+
+  /* --- PAGE CONTENT --- */
+  .page { display: none; width: 100%; height: 100%; }
+  .page.active { display: block; }
+
+  /* ===================== NAVBAR ===================== */
+  .navbar {
+    background: var(--brown);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0;
+  }
+  .navbar.mobile-nav { padding: 10px 16px; }
+  .logo { font-size: 20px; font-weight: 700; color: var(--yellow); letter-spacing: -.5px; }
+  .nav-links { display: flex; gap: 20px; }
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: color .15s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-login { color: var(--yellow); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .lang-btn {
+    border: 1.5px solid var(--yellow);
+    color: var(--yellow);
+    background: transparent;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .hamburger { color: var(--yellow); font-size: 22px; cursor: pointer; display: none; }
+
+  /* ===================== BUTTONS ===================== */
+  .btn {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: var(--r);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    text-align: center;
+  }
+  .btn:hover { opacity: .88; }
+  .btn:active { transform: scale(.97); }
+  .btn-yellow { background: var(--yellow); color: var(--brown); }
+  .btn-brown { background: var(--brownMid, #B66034); color: #fff; }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-outline { background: transparent; border: 2px solid var(--yellow); color: var(--brown); }
+  .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: var(--r-sm); }
+  .btn-full { width: 100%; margin-top: 8px; }
+
+  /* ===================== INPUTS ===================== */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--brown); display: block; margin-bottom: 5px; }
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--brown-mid);
+    border-radius: var(--r-sm);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--brown);
+    background: #fff;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .form-input:focus { border-color: var(--yellow); }
+
+  /* ===================== CARD ===================== */
+  .card {
+    background: #fff;
+    border-radius: var(--r-lg);
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(97,43,43,.1);
+  }
+  .card-title { font-size: 22px; font-weight: 700; color: var(--brown); margin-bottom: 4px; text-align: center; }
+  .card-sub { font-size: 13px; color: var(--brown-mid); text-align: center; margin-bottom: 22px; }
+
+  /* ===================== FOOTER ===================== */
+  .footer {
+    background: var(--brown);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+  .footer-col { }
+  .footer-title { color: var(--yellow); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .footer-links { color: #ccc; font-size: 12px; }
+  .footer-social { display: flex; gap: 8px; }
+  .soc-icon {
+    width: 30px; height: 30px;
+    background: var(--yellow);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brown);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* ===================== PAGE LAYOUTS ===================== */
+  .page-body { padding: 20px 24px; }
+  .page-body.mobile { padding: 14px 16px; }
+
+  /* --- AUTH / REGISTER --- */
+  .auth-wrap { display: flex; justify-content: center; padding: 20px 16px 0; }
+  .auth-card { width: 100%; max-width: 380px; }
+
+  /* --- DASHBOARD --- */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+  .stats-row.mobile { grid-template-columns: repeat(2, 1fr); }
+  .stat-card {
+    border-radius: var(--r);
+    padding: 14px;
+    color: #fff;
+  }
+  .stat-val { font-size: 24px; font-weight: 700; }
+  .stat-lbl { font-size: 11px; opacity: .85; margin-top: 2px; }
+
+  .progress-bar-bg { background: rgba(0,0,0,.12); border-radius: 8px; height: 10px; margin: 8px 0 4px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--yellow); border-radius: 8px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--brown); margin: 16px 0 8px; }
+
+  .monster-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .monster-grid.desktop-g { grid-template-columns: repeat(3, 1fr); }
+  .monster-card {
+    background: var(--brown);
+    border-radius: var(--r);
+    padding: 12px;
+  }
+  .mc-name { font-size: 14px; font-weight: 700; color: var(--yellow); }
+  .mc-sub { font-size: 11px; color: rgba(255,255,255,.7); margin: 2px 0 8px; }
+  .mc-counter { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .ctr-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--brown-mid);
+    border: none; color: #fff; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-weight: 700; font-family: 'Outfit', sans-serif;
+  }
+  .ctr-val { font-size: 16px; font-weight: 700; color: var(--yellow); min-width: 28px; text-align: center; }
+  .mc-actions { display: flex; gap: 6px; }
+
+  /* --- QUEST PAGE --- */
+  .quest-hero {
+    background: var(--brown);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .quest-egg { font-size: 52px; }
+  .quest-hero-text h2 { color: var(--yellow); font-size: 18px; font-weight: 700; }
+  .quest-hero-text p { color: rgba(255,255,255,.8); font-size: 12px; margin-top: 4px; }
+
+  .etape-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .etape-grid.desktop-g { grid-template-columns: repeat(3, 1fr); }
+  .etape-card {
+    background: #fff;
+    border-radius: var(--r);
+    padding: 14px;
+    border: 2px solid;
+  }
+  .etape-name { font-size: 14px; font-weight: 700; color: var(--brown); }
+  .etape-status { font-size: 11px; font-weight: 600; margin: 3px 0 8px; }
+  .etape-actions { display: flex; gap: 6px; margin-top: 8px; }
+
+  /* --- PROFILE --- */
+  .profile-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--brown);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700; color: var(--yellow);
+    border: 3px solid var(--yellow);
+    flex-shrink: 0;
+  }
+  .profile-info h2 { font-size: 18px; font-weight: 700; color: var(--brown); }
+  .profile-info p { font-size: 12px; color: var(--brown-mid); }
+  .profile-badge {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--brown);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-top: 3px;
+  }
+  .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .pstat {
+    background: var(--brown);
+    border-radius: var(--r-sm);
+    padding: 10px;
+    text-align: center;
+  }
+  .pstat-val { font-size: 20px; font-weight: 700; color: var(--yellow); }
+  .pstat-lbl { font-size: 10px; color: rgba(255,255,255,.7); }
+
+  .field-row { display: flex; flex-direction: column; gap: 12px; }
+  .field-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #fff; border-radius: var(--r-sm); border: 1.5px solid rgba(97,43,43,.15); }
+  .field-lbl { font-size: 12px; color: var(--brown-mid); }
+  .field-val { font-size: 13px; font-weight: 600; color: var(--brown); }
+
+  /* --- SEARCH PAGE --- */
+  .search-bar-wrap { display: flex; gap: 8px; margin-bottom: 14px; }
+  .search-input {
+    flex: 1;
+    padding: 11px 14px;
+    border: 2px solid var(--brown-mid);
+    border-radius: var(--r-sm);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: var(--brown);
+    background: #fff;
+    outline: none;
+  }
+  .search-input:focus { border-color: var(--yellow); }
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border-radius: var(--r);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border: 1.5px solid rgba(97,43,43,.12);
+  }
+  .uc-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--brown);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: var(--yellow);
+    flex-shrink: 0;
+  }
+  .uc-info { flex: 1; }
+  .uc-name { font-size: 14px; font-weight: 700; color: var(--brown); }
+  .uc-sub { font-size: 11px; color: var(--brown-mid); }
+  .uc-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+  }
+
+  /* --- MAIL --- */
+  .mail-wrap { display: flex; justify-content: center; padding: 12px 16px 0; }
+  .mail-card { max-width: 400px; width: 100%; background: #fff; border-radius: var(--r-lg); overflow: hidden; border: 1px solid rgba(97,43,43,.1); }
+  .mail-header { background: var(--brown); padding: 24px; text-align: center; }
+  .mail-logo { font-size: 22px; font-weight: 700; color: var(--yellow); margin-bottom: 4px; }
+  .mail-tagline { font-size: 12px; color: rgba(255,255,255,.7); }
+  .mail-body { padding: 24px; }
+  .mail-greeting { font-size: 15px; font-weight: 600; color: var(--brown); margin-bottom: 10px; }
+  .mail-text { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 14px; }
+  .mail-code { background: var(--bg); border-radius: var(--r-sm); padding: 14px; text-align: center; margin-bottom: 14px; }
+  .mail-code-val { font-size: 28px; font-weight: 700; color: var(--brown); letter-spacing: 8px; }
+  .mail-footer { background: #f9f4ef; padding: 14px 24px; text-align: center; font-size: 11px; color: #999; border-top: 1px solid rgba(0,0,0,.06); }
+
+  /* TRANSITIONS */
+  .page { animation: fadeIn .22s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* NOTIFICATION */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--brown);
+    color: var(--yellow);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px 22px;
+    border-radius: 40px;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  /* scrollable inner */
+  .scroll-inner { overflow-y: auto; max-height: 440px; padding: 0 2px; }
+  .screen.desktop .scroll-inner { max-height: 420px; }
+  .screen.mobile .scroll-inner { max-height: 490px; }
+</style>
+
+<h2 class="sr-only">Prototype interactif Metamob – 8 pages desktop et mobile</h2>
+<div class="proto-shell">
+
+  <div class="switcher">
+    <button class="sw-btn active" onclick="setDevice('desktop')"><i class="ti ti-device-laptop" aria-hidden="true"></i> Desktop</button>
+    <button class="sw-btn" onclick="setDevice('mobile')"><i class="ti ti-device-mobile" aria-hidden="true"></i> Mobile</button>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn active" onclick="showPage('inscription')">Inscription</button>
+    <button class="pn-btn" onclick="showPage('auth')">Connexion</button>
+    <button class="pn-btn" onclick="showPage('dashboard')">Tableau de bord</button>
+    <button class="pn-btn" onclick="showPage('quest')">Quête Ocre</button>
+    <button class="pn-btn" onclick="showPage('archis')">Archimonstres</button>
+    <button class="pn-btn" onclick="showPage('profil')">Profil</button>
+    <button class="pn-btn" onclick="showPage('search')">Recherche</button>
+    <button class="pn-btn" onclick="showPage('mail')">Mail inscription</button>
+  </div>
+
+  <div class="screen-wrap">
+    <div class="screen desktop" id="screen">
+
+      <!-- ===== PAGE: INSCRIPTION ===== -->
+      <div class="page active" id="pg-inscription">
+        <nav class="navbar" id="nav-inscription">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links" id="nav-links-inscription">
+            <a onclick="showPage('quest')">La Quête</a>
+            <a onclick="showPage('archis')">Archimonstres</a>
+            <a>Aide</a>
+          </div>
+          <div class="nav-right">
+            <span class="nav-login" onclick="showPage('auth')">Connexion</span>
+            <button class="lang-btn">FR ▾</button>
+          </div>
+        </nav>
+        <div class="auth-wrap">
+          <div class="auth-card card">
+            <p class="card-title">Créer un compte</p>
+            <p class="card-sub">Rejoignez la communauté Metamob</p>
+            <div class="form-group">
+              <label class="form-label">Pseudo Dofus</label>
+              <input class="form-input" placeholder="Votre pseudo en jeu…" type="text">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Adresse email</label>
+              <input class="form-input" placeholder="votre@email.com" type="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mot de passe</label>
+              <input class="form-input" placeholder="••••••••••••" type="password">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirmer le mot de passe</label>
+              <input class="form-input" placeholder="••••••••••••" type="password">
+            </div>
+            <button class="btn btn-yellow btn-full" onclick="doRegister()">S'inscrire</button>
+            <p style="text-align:center;margin-top:12px;font-size:12px;color:#B66034;">Déjà un compte ? <a style="color:var(--brown);font-weight:700;cursor:pointer;" onclick="showPage('auth')">Se connecter</a></p>
+          </div>
+        </div>
+        <footer class="footer" style="margin-top:16px;">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · Mentions légales</p></div>
+          <div class="footer-col"><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-facebook" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-youtube" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: AUTH ===== -->
+      <div class="page" id="pg-auth">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links" id="nav-links-auth">
+            <a onclick="showPage('quest')">La Quête</a>
+            <a onclick="showPage('archis')">Archimonstres</a>
+            <a>Aide</a>
+          </div>
+          <div class="nav-right">
+            <span class="nav-login" onclick="showPage('inscription')" style="color:#fff;">S'inscrire</span>
+            <button class="lang-btn">FR ▾</button>
+          </div>
+        </nav>
+        <div class="auth-wrap">
+          <div class="auth-card card">
+            <p class="card-title">Connexion</p>
+            <p class="card-sub">Accédez à votre espace Metamob</p>
+            <div class="form-group">
+              <label class="form-label">Adresse email</label>
+              <input class="form-input" placeholder="votre@email.com" type="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mot de passe</label>
+              <input class="form-input" placeholder="••••••••••••" type="password">
+            </div>
+            <p style="text-align:right;font-size:11px;color:var(--brown-mid);margin-bottom:6px;cursor:pointer;">Mot de passe oublié ?</p>
+            <button class="btn btn-yellow btn-full" onclick="doLogin()">Se connecter</button>
+            <p style="text-align:center;margin-top:12px;font-size:12px;color:#B66034;">Pas encore de compte ? <a style="color:var(--brown);font-weight:700;cursor:pointer;" onclick="showPage('inscription')">S'inscrire</a></p>
+          </div>
+        </div>
+        <footer class="footer" style="margin-top:24px;">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · Mentions légales</p></div>
+          <div class="footer-col"><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-facebook" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-youtube" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: DASHBOARD ===== -->
+      <div class="page" id="pg-dashboard">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links" id="nav-links-dashboard">
+            <a onclick="showPage('quest')">La Quête</a>
+            <a onclick="showPage('archis')">Archimonstres</a>
+            <a onclick="showPage('search')">Communauté</a>
+            <a>Aide</a>
+          </div>
+          <div class="nav-right">
+            <span class="nav-login" onclick="showPage('profil')" style="display:flex;align-items:center;gap:5px;"><i class="ti ti-user-circle" aria-hidden="true" style="font-size:18px;"></i> MonPseudo</span>
+          </div>
+        </nav>
+        <div class="scroll-inner">
+        <div class="page-body" id="dash-body">
+          <p style="font-size:18px;font-weight:700;color:var(--brown);margin-bottom:2px;">Bienvenue, Aventurier !</p>
+          <p style="font-size:12px;color:var(--brown-mid);margin-bottom:14px;">Voici votre progression sur la Quête du Dofus Ocre</p>
+
+          <div class="stats-row" id="stats-row">
+            <div class="stat-card" style="background:var(--brown);"><p class="stat-val">34<span style="font-size:14px;">/100</span></p><p class="stat-lbl">Archimonstres complétés</p></div>
+            <div class="stat-card" style="background:var(--brown-mid);"><p class="stat-val">127</p><p class="stat-lbl">Exemplaires proposés</p></div>
+            <div class="stat-card" style="background:var(--yellow);color:var(--brown);"><p class="stat-val" style="color:var(--brown);">42</p><p class="stat-lbl" style="color:var(--brown);">Échanges réalisés</p></div>
+            <div class="stat-card" style="background:var(--red);"><p class="stat-val">8</p><p class="stat-lbl">En cours d'échange</p></div>
+          </div>
+
+          <p style="font-size:13px;font-weight:700;color:var(--brown);">Progression globale</p>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:34%;"></div></div>
+          <p style="font-size:11px;color:var(--brown-mid);margin-bottom:14px;">34 / 100 archimonstres — 34%</p>
+
+          <p class="section-title">Archimonstres récents</p>
+          <div class="monster-grid" id="dash-monster-grid">
+            <div class="monster-card"><p class="mc-name">🦟 Moskito</p><p class="mc-sub">Exemplaires: 67</p><div style="display:flex;gap:6px;"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" onclick="showPage('archis')">Voir</button></div></div>
+            <div class="monster-card"><p class="mc-name">🦋 Larve Bleue</p><p class="mc-sub">Exemplaires: 12</p><div style="display:flex;gap:6px;"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" onclick="showPage('archis')">Voir</button></div></div>
+            <div class="monster-card" id="dash-card3"><p class="mc-name">🌸 Pissenlit</p><p class="mc-sub">Exemplaires: 0</p><div style="display:flex;gap:6px;"><button class="btn btn-sm" style="background:var(--yellow);color:var(--brown);" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+            <button class="btn btn-yellow btn-sm" onclick="showPage('quest')"><i class="ti ti-map" aria-hidden="true"></i> La Quête du Dofus Ocre</button>
+            <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);" onclick="showPage('archis')"><i class="ti ti-list" aria-hidden="true"></i> Mes Archimonstres</button>
+            <button class="btn btn-sm" style="background:#fff;color:var(--brown);border:2px solid var(--brown);" onclick="showPage('profil')"><i class="ti ti-user" aria-hidden="true"></i> Mon Profil</button>
+          </div>
+        </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · Mentions légales</p></div>
+          <div class="footer-col"><p class="footer-title">Social</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-youtube" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: QUEST ===== -->
+      <div class="page" id="pg-quest">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links"><a onclick="showPage('dashboard')">Accueil</a><a onclick="showPage('archis')">Archimonstres</a><a onclick="showPage('search')">Communauté</a></div>
+          <div class="nav-right"><span class="nav-login" onclick="showPage('profil')"><i class="ti ti-user-circle" aria-hidden="true"></i> MonPseudo</span></div>
+        </nav>
+        <div class="scroll-inner">
+        <div class="page-body">
+          <p style="font-size:20px;font-weight:700;color:var(--brown);margin-bottom:4px;">La Quête du Dofus Ocre</p>
+          <p style="font-size:12px;color:var(--brown-mid);margin-bottom:14px;">Suivez votre progression et gérez vos archimonstres</p>
+
+          <div class="quest-hero">
+            <div class="quest-egg">🥚</div>
+            <div class="quest-hero-text">
+              <h2>Progression globale</h2>
+              <p>34 archimonstres complétés sur 100</p>
+              <div class="progress-bar-bg" style="margin-top:8px;background:rgba(255,255,255,.2);"><div class="progress-bar-fill" style="width:34%;"></div></div>
+            </div>
+          </div>
+
+          <p class="section-title">Étapes de la quête</p>
+          <div class="etape-grid" id="etape-grid">
+            <div class="etape-card" style="border-color:var(--yellow);">
+              <p class="etape-name">🦟 Moskito</p>
+              <p class="etape-status" style="color:var(--yellow);">✓ Complété</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 67</p>
+              <div class="etape-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button></div>
+            </div>
+            <div class="etape-card" style="border-color:var(--brown-mid);">
+              <p class="etape-name">🦋 Larve Bleue</p>
+              <p class="etape-status" style="color:var(--brown-mid);">⏳ En cours</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 12</p>
+              <div class="etape-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" onclick="toast('Recherche publiée !')">Rechercher</button></div>
+            </div>
+            <div class="etape-card" style="border-color:#ddd;">
+              <p class="etape-name">🌸 Pissenlit</p>
+              <p class="etape-status" style="color:#aaa;">◯ Non commencé</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 0</p>
+              <div class="etape-actions"><button class="btn btn-sm btn-yellow" onclick="toast('Recherche publiée !')">Rechercher</button></div>
+            </div>
+            <div class="etape-card" style="border-color:var(--yellow);">
+              <p class="etape-name">🦀 Crabe</p>
+              <p class="etape-status" style="color:var(--yellow);">✓ Complété</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 45</p>
+              <div class="etape-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button></div>
+            </div>
+            <div class="etape-card" style="border-color:var(--brown-mid);">
+              <p class="etape-name">🐦 Tofu</p>
+              <p class="etape-status" style="color:var(--brown-mid);">⏳ En cours</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 28</p>
+              <div class="etape-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" onclick="toast('Recherche publiée !')">Rechercher</button></div>
+            </div>
+            <div class="etape-card" style="border-color:#ddd;">
+              <p class="etape-name">🧙 Bwork Mage</p>
+              <p class="etape-status" style="color:#aaa;">◯ Non commencé</p>
+              <p style="font-size:11px;color:var(--brown-mid);">Exemplaires: 0</p>
+              <div class="etape-actions"><button class="btn btn-sm btn-yellow" onclick="toast('Recherche publiée !')">Rechercher</button></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+          <div class="footer-col"><p class="footer-title">Social</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-youtube" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: ARCHIMONSTRES ===== -->
+      <div class="page" id="pg-archis">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links"><a onclick="showPage('dashboard')">Accueil</a><a onclick="showPage('quest')">La Quête</a><a onclick="showPage('search')">Communauté</a></div>
+          <div class="nav-right"><span class="nav-login" onclick="showPage('profil')"><i class="ti ti-user-circle" aria-hidden="true"></i> MonPseudo</span></div>
+        </nav>
+        <div class="scroll-inner">
+        <div class="page-body">
+          <p style="font-size:20px;font-weight:700;color:var(--brown);margin-bottom:2px;">Archimonstres</p>
+          <p style="font-size:12px;color:var(--brown-mid);margin-bottom:12px;">Gérez votre inventaire pour la Quête du Dofus Ocre</p>
+
+          <div class="search-bar-wrap">
+            <input class="search-input" placeholder="Rechercher un archimonstre…" type="text" id="archi-search" oninput="filterArchis()" style="font-size:13px;">
+            <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);white-space:nowrap;">Filtrer</button>
+          </div>
+
+          <div class="monster-grid" id="archi-grid">
+            <div class="monster-card" data-name="Moskito"><p class="mc-name">🦟 Moskito</p><p class="mc-sub">Archimonstre · Zaap</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">67</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+            <div class="monster-card" data-name="Larve Bleue"><p class="mc-name">🦋 Larve Bleue</p><p class="mc-sub">Archimonstre · Arakne</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">12</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+            <div class="monster-card" data-name="Pissenlit"><p class="mc-name">🌸 Pissenlit</p><p class="mc-sub">Archimonstre · Ecaflip</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">0</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+            <div class="monster-card" data-name="Crabe"><p class="mc-name">🦀 Crabe</p><p class="mc-sub">Archimonstre · Osamodas</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">45</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+            <div class="monster-card" data-name="Tofu"><p class="mc-name">🐦 Tofu</p><p class="mc-sub">Archimonstre · Feca</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">28</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+            <div class="monster-card" data-name="Bwork Mage"><p class="mc-name">🧙 Bwork Mage</p><p class="mc-sub">Archimonstre · Xelor</p><div class="mc-counter"><button class="ctr-btn" onclick="changeCount(this,-1)">-</button><span class="ctr-val">0</span><button class="ctr-btn" onclick="changeCount(this,1)">+</button></div><div class="mc-actions"><button class="btn btn-sm" style="background:var(--red);color:#fff;flex:1;" onclick="toast('Proposition envoyée !')">Proposer</button><button class="btn btn-sm btn-yellow" style="flex:1;" onclick="toast('Recherche publiée !')">Rechercher</button></div></div>
+          </div>
+        </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+          <div class="footer-col"><p class="footer-title">Social</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span><span class="soc-icon"><i class="ti ti-brand-youtube" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: PROFIL ===== -->
+      <div class="page" id="pg-profil">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links"><a onclick="showPage('dashboard')">Accueil</a><a onclick="showPage('quest')">La Quête</a><a onclick="showPage('archis')">Archimonstres</a></div>
+          <div class="nav-right"><span class="nav-login" style="color:#fff;">Mon Profil</span></div>
+        </nav>
+        <div class="scroll-inner">
+        <div class="page-body">
+          <div class="profile-hero">
+            <div class="avatar">AV</div>
+            <div class="profile-info">
+              <h2>Aventurier123</h2>
+              <p>Membre depuis janvier 2024</p>
+              <span class="profile-badge">Chasseur de Dofus</span>
+            </div>
+          </div>
+
+          <div class="profile-stats">
+            <div class="pstat"><p class="pstat-val">34</p><p class="pstat-lbl">Archis complétés</p></div>
+            <div class="pstat"><p class="pstat-val">127</p><p class="pstat-lbl">Propositions</p></div>
+            <div class="pstat"><p class="pstat-val">42</p><p class="pstat-lbl">Échanges</p></div>
+          </div>
+
+          <p class="section-title">Informations du compte</p>
+          <div class="field-row" style="margin-bottom:14px;">
+            <div class="field-item"><span class="field-lbl">Pseudo</span><span class="field-val">Aventurier123</span></div>
+            <div class="field-item"><span class="field-lbl">Email</span><span class="field-val">aventurier@mail.com</span></div>
+            <div class="field-item"><span class="field-lbl">Serveur Dofus</span><span class="field-val">Imagiro</span></div>
+            <div class="field-item"><span class="field-lbl">Version</span><span class="field-val">Dofus Unity</span></div>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-yellow btn-sm" onclick="toast('Profil mis à jour !')"><i class="ti ti-edit" aria-hidden="true"></i> Modifier le profil</button>
+            <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);" onclick="toast('Mot de passe modifié !')"><i class="ti ti-lock" aria-hidden="true"></i> Changer le mot de passe</button>
+            <button class="btn btn-sm" style="background:var(--red);color:#fff;" onclick="doLogout()"><i class="ti ti-logout" aria-hidden="true"></i> Déconnexion</button>
+          </div>
+        </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+          <div class="footer-col"><p class="footer-title">Social</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: SEARCH ===== -->
+      <div class="page" id="pg-search">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links"><a onclick="showPage('dashboard')">Accueil</a><a onclick="showPage('quest')">La Quête</a><a onclick="showPage('archis')">Archimonstres</a></div>
+          <div class="nav-right"><span class="nav-login" onclick="showPage('profil')"><i class="ti ti-user-circle" aria-hidden="true"></i> MonPseudo</span></div>
+        </nav>
+        <div class="scroll-inner">
+        <div class="page-body">
+          <p style="font-size:20px;font-weight:700;color:var(--brown);margin-bottom:2px;">Recherche d'utilisateurs</p>
+          <p style="font-size:12px;color:var(--brown-mid);margin-bottom:12px;">Trouvez des partenaires d'échange pour compléter votre collection</p>
+
+          <div class="search-bar-wrap">
+            <input class="search-input" placeholder="Rechercher un joueur…" type="text" id="user-search" oninput="filterUsers()" style="font-size:13px;">
+            <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);">Filtrer</button>
+          </div>
+
+          <div id="user-list">
+            <div class="user-card" data-uname="Aventurier123"><div class="uc-avatar">AV</div><div class="uc-info"><p class="uc-name">Aventurier123</p><p class="uc-sub">Serveur Imagiro · Dofus Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">34/100</span></div>
+            <div class="user-card" data-uname="DofusMaster"><div class="uc-avatar" style="background:var(--brown-mid);">DM</div><div class="uc-info"><p class="uc-name">DofusMaster</p><p class="uc-sub">Serveur Brutas · Dofus Retro</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">78/100</span></div>
+            <div class="user-card" data-uname="KraloveHunter"><div class="uc-avatar" style="background:var(--red);">KH</div><div class="uc-info"><p class="uc-name">KraloveHunter</p><p class="uc-sub">Serveur Tylezia · Dofus Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">92/100</span></div>
+            <div class="user-card" data-uname="OcreQuester"><div class="uc-avatar" style="background:var(--brown);">OQ</div><div class="uc-info"><p class="uc-name">OcreQuester</p><p class="uc-sub">Serveur Imagiro · Dofus Touch</p></div><span class="uc-badge" style="background:var(--brown-mid);color:#fff;">21/100</span></div>
+            <div class="user-card" data-uname="MoskitoFarm"><div class="uc-avatar" style="background:var(--yellow);color:var(--brown);">MF</div><div class="uc-info"><p class="uc-name">MoskitoFarm</p><p class="uc-sub">Serveur Brutas · Dofus Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">55/100</span></div>
+          </div>
+        </div>
+        </div>
+        <footer class="footer">
+          <div class="footer-col"><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+          <div class="footer-col"><p class="footer-title">Social</p><div class="footer-social"><span class="soc-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span></div></div>
+        </footer>
+      </div>
+
+      <!-- ===== PAGE: MAIL ===== -->
+      <div class="page" id="pg-mail">
+        <nav class="navbar">
+          <span class="logo">🥚 Metamob</span>
+          <div class="nav-links"><a onclick="showPage('inscription')">S'inscrire</a><a onclick="showPage('auth')">Se connecter</a></div>
+          <div class="nav-right"><button class="lang-btn">FR ▾</button></div>
+        </nav>
+        <div class="mail-wrap" style="padding-top:20px;padding-bottom:20px;">
+          <div class="mail-card">
+            <div class="mail-header">
+              <div class="mail-logo">🥚 Metamob</div>
+              <p class="mail-tagline">Votre compagnon pour la Quête du Dofus Ocre</p>
+            </div>
+            <div class="mail-body">
+              <p class="mail-greeting">Bonjour Aventurier123,</p>
+              <p class="mail-text">Bienvenue sur <strong>Metamob</strong> ! Votre compte a bien été créé. Pour finaliser votre inscription et accéder à toutes les fonctionnalités, veuillez confirmer votre adresse email en utilisant le code ci-dessous :</p>
+              <div class="mail-code">
+                <p style="font-size:11px;color:#999;margin-bottom:6px;">Code de confirmation (valable 24h)</p>
+                <p class="mail-code-val">947 261</p>
+              </div>
+              <p class="mail-text">Ou cliquez sur ce bouton pour confirmer directement :</p>
+              <button class="btn btn-yellow btn-full" onclick="toast('Email confirmé !')">Confirmer mon adresse email</button>
+              <p style="font-size:11px;color:#aaa;margin-top:14px;line-height:1.6;">Si vous n'avez pas créé de compte sur Metamob, ignorez simplement cet email. Votre adresse ne sera pas utilisée.</p>
+            </div>
+            <div class="mail-footer">
+              <p>© 2025 Metamob · Tous droits réservés</p>
+              <p style="margin-top:3px;"><a style="color:#aaa;">Se désabonner</a> · <a style="color:#aaa;">Politique de confidentialité</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast-el"></div>
+</div>
+
+<script>
+let currentDevice = 'desktop';
+let currentPage = 'inscription';
+
+function setDevice(d) {
+  currentDevice = d;
+  const screen = document.getElementById('screen');
+  screen.className = 'screen ' + d;
+
+  document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const isM = d === 'mobile';
+  document.getElementById('stats-row').className = 'stats-row' + (isM ? ' mobile' : '');
+  document.getElementById('dash-monster-grid').className = 'monster-grid' + (isM ? '' : ' desktop-g');
+  document.getElementById('archi-grid').className = 'monster-grid' + (isM ? '' : ' desktop-g');
+  document.getElementById('etape-grid').className = 'etape-grid' + (isM ? '' : ' desktop-g');
+
+  const navLinks = document.querySelectorAll('.nav-links');
+  navLinks.forEach(nl => { nl.style.display = isM ? 'none' : 'flex'; });
+
+  const bodies = document.querySelectorAll('.page-body');
+  bodies.forEach(b => { b.className = 'page-body' + (isM ? ' mobile' : ''); });
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.pn-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById('pg-' + id).classList.add('active');
+  document.querySelectorAll('.pn-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+  currentPage = id;
+  document.getElementById('screen').scrollTop = 0;
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast-el');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function doRegister() {
+  toast('Inscription réussie ! Vérifiez votre email.');
+  setTimeout(() => showPage('mail'), 1200);
+}
+
+function doLogin() {
+  toast('Connexion réussie !');
+  setTimeout(() => showPage('dashboard'), 900);
+}
+
+function doLogout() {
+  toast('Déconnexion…');
+  setTimeout(() => showPage('auth'), 900);
+}
+
+function changeCount(btn, delta) {
+  const valEl = btn.parentElement.querySelector('.ctr-val');
+  let v = parseInt(valEl.textContent) + delta;
+  if (v < 0) v = 0;
+  valEl.textContent = v;
+  toast(delta > 0 ? 'Exemplaire ajouté !' : 'Exemplaire retiré.');
+}
+
+function filterArchis() {
+  const q = document.getElementById('archi-search').value.toLowerCase();
+  document.querySelectorAll('#archi-grid .monster-card').forEach(c => {
+    const name = c.getAttribute('data-name').toLowerCase();
+    c.style.display = name.includes(q) ? '' : 'none';
+  });
+}
+
+function filterUsers() {
+  const q = document.getElementById('user-search').value.toLowerCase();
+  document.querySelectorAll('#user-list .user-card').forEach(c => {
+    const name = c.getAttribute('data-uname').toLowerCase();
+    c.style.display = name.includes(q) ? '' : 'none';
+  });
+}
+</script>
