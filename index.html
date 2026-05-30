@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metamob — All Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #2a2a2a; padding: 40px; }
+
+:root {
+  --bg: #F2DDC6;
+  --brown: #612B2B;
+  --mid: #B66034;
+  --yellow: #F3B12D;
+  --red: #FF4447;
+  --white: #FFFFFF;
+  --r: 14px;
+  --rlg: 24px;
+  --rsm: 10px;
+}
+
+/* LAYOUT */
+.page-row {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+  align-items: flex-start;
+}
+.label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #F3B12D;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.col { display: flex; flex-direction: column; }
+
+/* DESKTOP FRAME */
+.desktop {
+  width: 1440px;
+  background: var(--bg);
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* MOBILE FRAME */
+.mobile {
+  width: 390px;
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 8px solid #333;
+}
+
+/* ---- SHARED COMPONENTS ---- */
+.navbar {
+  background: var(--brown);
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar.mobile-nav { padding: 12px 20px; }
+.logo { font-size: 22px; font-weight: 700; color: var(--yellow); }
+.logo.sm { font-size: 18px; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { color: #fff; font-size: 15px; text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 14px; }
+.nav-login { color: var(--yellow); font-size: 15px; font-weight: 600; }
+.lang-btn { border: 1.5px solid var(--yellow); color: var(--yellow); background: transparent; border-radius: 8px; padding: 5px 12px; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; }
+
+.footer {
+  background: var(--brown);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer.mobile-footer { padding: 16px 20px; flex-direction: column; gap: 10px; align-items: flex-start; }
+.footer-title { color: var(--yellow); font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.footer-links { color: #ccc; font-size: 13px; }
+.footer-social { display: flex; gap: 8px; margin-top: 4px; }
+.soc { width: 30px; height: 30px; background: var(--yellow); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--brown); }
+
+.page-body { padding: 32px 40px; }
+.page-body.mobile-body { padding: 20px 20px; }
+
+.btn { display: inline-block; padding: 12px 24px; border-radius: var(--r); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; border: none; cursor: pointer; text-align: center; }
+.btn-yellow { background: var(--yellow); color: var(--brown); }
+.btn-brown { background: var(--mid); color: #fff; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-sm { padding: 8px 16px; font-size: 13px; border-radius: var(--rsm); }
+.btn-full { width: 100%; display: block; text-align: center; }
+
+.card { background: var(--white); border-radius: var(--rlg); padding: 36px; box-shadow: 0 6px 32px rgba(97,43,43,.12); }
+.card-title { font-size: 26px; font-weight: 700; color: var(--brown); text-align: center; margin-bottom: 6px; }
+.card-sub { font-size: 14px; color: var(--mid); text-align: center; margin-bottom: 28px; }
+
+.form-group { margin-bottom: 18px; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--brown); display: block; margin-bottom: 6px; }
+.form-input { width: 100%; padding: 13px 16px; border: 1.5px solid var(--mid); border-radius: var(--rsm); font-family: 'Outfit', sans-serif; font-size: 14px; color: #999; background: #fff; }
+
+.section-title { font-size: 18px; font-weight: 700; color: var(--brown); margin: 20px 0 12px; }
+.section-title.sm { font-size: 15px; }
+
+/* STATS */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.stats-row-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+.stat-card { border-radius: var(--r); padding: 18px; color: #fff; }
+.stat-val { font-size: 28px; font-weight: 700; }
+.stat-lbl { font-size: 13px; opacity: .85; margin-top: 4px; }
+
+/* PROGRESS */
+.prog-bg { background: rgba(0,0,0,.12); border-radius: 8px; height: 12px; margin: 10px 0 6px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--yellow); border-radius: 8px; }
+.prog-bg.sm { height: 8px; margin: 6px 0 4px; }
+
+/* MONSTER GRID */
+.monster-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.monster-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.monster-card { background: var(--brown); border-radius: var(--r); padding: 16px; }
+.mc-name { font-size: 16px; font-weight: 700; color: var(--yellow); }
+.mc-sub { font-size: 12px; color: rgba(255,255,255,.7); margin: 4px 0 10px; }
+.mc-counter { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.ctr-btn { width: 30px; height: 30px; background: var(--mid); border: none; border-radius: 8px; color: #fff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; }
+.ctr-val { font-size: 18px; font-weight: 700; color: var(--yellow); min-width: 32px; text-align: center; }
+.mc-actions { display: flex; gap: 8px; }
+
+/* ETAPE GRID */
+.etape-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.etape-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.etape-card { background: #fff; border-radius: var(--r); padding: 16px; border: 2px solid; }
+.etape-name { font-size: 15px; font-weight: 700; color: var(--brown); }
+.etape-status { font-size: 12px; font-weight: 600; margin: 4px 0 8px; }
+.etape-count { font-size: 12px; color: var(--mid); margin-bottom: 10px; }
+.etape-actions { display: flex; gap: 8px; }
+
+/* QUEST HERO */
+.quest-hero { background: var(--brown); border-radius: var(--rlg); padding: 24px 32px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; }
+.quest-egg { font-size: 72px; line-height: 1; }
+.quest-egg.sm { font-size: 52px; }
+.quest-hero-text h2 { color: var(--yellow); font-size: 22px; font-weight: 700; }
+.quest-hero-text h2.sm { font-size: 18px; }
+.quest-hero-text p { color: rgba(255,255,255,.8); font-size: 14px; margin-top: 6px; }
+
+/* PROFILE */
+.profile-hero { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--brown); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: var(--yellow); border: 3px solid var(--yellow); flex-shrink: 0; }
+.avatar.sm { width: 56px; height: 56px; font-size: 22px; }
+.profile-info h2 { font-size: 22px; font-weight: 700; color: var(--brown); }
+.profile-info h2.sm { font-size: 18px; }
+.profile-info p { font-size: 13px; color: var(--mid); }
+.badge { display: inline-block; background: var(--yellow); color: var(--brown); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 4px; }
+.profile-stats-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.pstat { background: var(--brown); border-radius: var(--rsm); padding: 14px; text-align: center; }
+.pstat-val { font-size: 24px; font-weight: 700; color: var(--yellow); }
+.pstat-lbl { font-size: 11px; color: rgba(255,255,255,.7); margin-top: 2px; }
+.field-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.field-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-radius: var(--rsm); border: 1.5px solid rgba(97,43,43,.15); }
+.field-lbl { font-size: 13px; color: var(--mid); }
+.field-val { font-size: 14px; font-weight: 600; color: var(--brown); }
+
+/* SEARCH */
+.search-bar { display: flex; gap: 10px; margin-bottom: 16px; }
+.search-input { flex: 1; padding: 13px 16px; border: 2px solid var(--mid); border-radius: var(--rsm); font-family: 'Outfit', sans-serif; font-size: 14px; color: #999; background: #fff; }
+.user-card { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: var(--r); padding: 14px 18px; margin-bottom: 10px; border: 1.5px solid rgba(97,43,43,.12); }
+.uc-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--brown); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: var(--yellow); flex-shrink: 0; }
+.uc-info { flex: 1; }
+.uc-name { font-size: 15px; font-weight: 700; color: var(--brown); }
+.uc-sub { font-size: 12px; color: var(--mid); }
+.uc-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+/* MAIL */
+.mail-wrap { padding: 24px; display: flex; justify-content: center; }
+.mail-card { max-width: 520px; width: 100%; background: #fff; border-radius: var(--rlg); overflow: hidden; border: 1px solid rgba(97,43,43,.1); }
+.mail-header { background: var(--brown); padding: 32px; text-align: center; }
+.mail-logo { font-size: 26px; font-weight: 700; color: var(--yellow); margin-bottom: 6px; }
+.mail-tagline { font-size: 13px; color: rgba(255,255,255,.7); }
+.mail-body { padding: 32px; }
+.mail-greeting { font-size: 17px; font-weight: 600; color: var(--brown); margin-bottom: 14px; }
+.mail-text { font-size: 14px; color: #555; line-height: 1.65; margin-bottom: 18px; }
+.mail-code-box { background: var(--bg); border-radius: var(--rsm); padding: 20px; text-align: center; margin-bottom: 18px; }
+.mail-code-val { font-size: 36px; font-weight: 700; color: var(--brown); letter-spacing: 10px; }
+.mail-footer { background: #f9f4ef; padding: 18px 32px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid rgba(0,0,0,.06); }
+
+/* QUICK LINKS */
+.quick-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.quick-link { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fff; border-radius: var(--rsm); border: 2px solid var(--yellow); font-size: 14px; font-weight: 600; color: var(--brown); min-width: 200px; flex: 1; }
+.quick-link span { color: var(--yellow); font-size: 18px; }
+
+.hamburger { display: none; }
+
+/* DIVIDER LABEL between pages */
+.page-divider {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F3B12D;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-top: 1px solid #444;
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     PAGE 1 — INSCRIPTION
+================================================================ -->
+<div class="page-divider">Page 1 — Inscription</div>
+<div class="page-row">
+
+  <!-- DESKTOP -->
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop" id="d-inscription">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">La Quête</a><a href="#">Archimonstres</a><a href="#">Communauté</a><a href="#">Aide</a></div>
+        <div class="nav-right"><span class="nav-login">Connexion</span><button class="lang-btn">FR ▾</button></div>
+      </nav>
+      <div class="page-body" style="display:flex;justify-content:center;padding:40px;">
+        <div class="card" style="width:520px;">
+          <p class="card-title">Créer un compte</p>
+          <p class="card-sub">Rejoignez la communauté Metamob</p>
+          <div class="form-group"><label class="form-label">Pseudo Dofus</label><input class="form-input" type="text" placeholder="Votre pseudo en jeu…"></div>
+          <div class="form-group"><label class="form-label">Adresse email</label><input class="form-input" type="email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <div class="form-group"><label class="form-label">Confirmer le mot de passe</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <button class="btn btn-yellow btn-full" style="margin-top:8px;padding:14px;">S'inscrire</button>
+          <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--mid);">Déjà un compte ? <a href="#" style="color:var(--brown);font-weight:700;">Se connecter</a></p>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · Mentions légales</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- MOBILE -->
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <button class="lang-btn" style="font-size:12px;">FR ▾</button>
+      </nav>
+      <div class="page-body mobile-body">
+        <div class="card" style="padding:24px;">
+          <p class="card-title" style="font-size:22px;">Créer un compte</p>
+          <p class="card-sub">Rejoignez la communauté Metamob</p>
+          <div class="form-group"><label class="form-label">Pseudo Dofus</label><input class="form-input" type="text" placeholder="Votre pseudo…"></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <div class="form-group"><label class="form-label">Confirmer</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <button class="btn btn-yellow btn-full" style="padding:13px;">S'inscrire</button>
+          <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--mid);">Déjà un compte ? <a href="#" style="color:var(--brown);font-weight:700;">Se connecter</a></p>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact · Mentions légales</p></div>
+        <div><p class="footer-title" style="font-size:13px;">Social</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 2 — AUTHENTIFICATION
+================================================================ -->
+<div class="page-divider">Page 2 — Authentification</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">La Quête</a><a href="#">Archimonstres</a><a href="#">Communauté</a><a href="#">Aide</a></div>
+        <div class="nav-right"><span class="nav-login" style="color:#fff;">S'inscrire</span><button class="lang-btn">FR ▾</button></div>
+      </nav>
+      <div class="page-body" style="display:flex;justify-content:center;padding:48px 40px;">
+        <div class="card" style="width:520px;">
+          <p class="card-title">Connexion</p>
+          <p class="card-sub">Accédez à votre espace Metamob</p>
+          <div class="form-group"><label class="form-label">Adresse email</label><input class="form-input" type="email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <p style="text-align:right;font-size:13px;color:var(--mid);margin-bottom:10px;">Mot de passe oublié ?</p>
+          <button class="btn btn-yellow btn-full" style="padding:14px;">Se connecter</button>
+          <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--mid);">Pas encore de compte ? <a href="#" style="color:var(--brown);font-weight:700;">S'inscrire</a></p>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · Mentions légales</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <button class="lang-btn" style="font-size:12px;">FR ▾</button>
+      </nav>
+      <div class="page-body mobile-body">
+        <div class="card" style="padding:24px;margin-top:16px;">
+          <p class="card-title" style="font-size:22px;">Connexion</p>
+          <p class="card-sub">Accédez à votre espace Metamob</p>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="votre@email.com"></div>
+          <div class="form-group"><label class="form-label">Mot de passe</label><input class="form-input" type="password" placeholder="••••••••••••"></div>
+          <p style="text-align:right;font-size:12px;color:var(--mid);margin-bottom:10px;">Mot de passe oublié ?</p>
+          <button class="btn btn-yellow btn-full" style="padding:13px;">Se connecter</button>
+          <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--mid);">Pas encore de compte ? <a href="#" style="color:var(--brown);font-weight:700;">S'inscrire</a></p>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+        <div><p class="footer-title" style="font-size:13px;">Social</p><div class="footer-social"><span class="soc">in</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 3 — TABLEAU DE BORD
+================================================================ -->
+<div class="page-divider">Page 3 — Tableau de bord</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">La Quête</a><a href="#">Archimonstres</a><a href="#">Communauté</a><a href="#">Aide</a></div>
+        <div class="nav-right"><span class="nav-login">👤 MonPseudo</span></div>
+      </nav>
+      <div class="page-body">
+        <p style="font-size:28px;font-weight:700;color:var(--brown);margin-bottom:4px;">Bienvenue, Aventurier !</p>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:24px;">Voici votre progression sur la Quête du Dofus Ocre</p>
+        <div class="stats-row">
+          <div class="stat-card" style="background:var(--brown);"><p class="stat-val">34<span style="font-size:16px;">/100</span></p><p class="stat-lbl">Archimonstres complétés</p></div>
+          <div class="stat-card" style="background:var(--mid);"><p class="stat-val">127</p><p class="stat-lbl">Exemplaires proposés</p></div>
+          <div class="stat-card" style="background:var(--yellow);"><p class="stat-val" style="color:var(--brown);">42</p><p class="stat-lbl" style="color:var(--brown);">Échanges réalisés</p></div>
+          <div class="stat-card" style="background:var(--red);"><p class="stat-val">8</p><p class="stat-lbl">En cours d'échange</p></div>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--brown);">Progression globale</p>
+        <div class="prog-bg"><div class="prog-fill" style="width:34%;"></div></div>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:24px;">34 / 100 archimonstres — 34%</p>
+        <p class="section-title">Archimonstres récents</p>
+        <div class="monster-grid-3">
+          <div class="monster-card"><p class="mc-name">🦟 Moskito</p><p class="mc-sub">Exemplaires: 67</p><div class="mc-actions"><button class="btn btn-red btn-sm">Proposer</button><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🦋 Larve Bleue</p><p class="mc-sub">Exemplaires: 12</p><div class="mc-actions"><button class="btn btn-red btn-sm">Proposer</button><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🌸 Pissenlit</p><p class="mc-sub">Exemplaires: 0</p><div class="mc-actions"><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+        </div>
+        <div class="quick-links">
+          <div class="quick-link">La Quête du Dofus Ocre <span>→</span></div>
+          <div class="quick-link">Mes Archimonstres <span>→</span></div>
+          <div class="quick-link">Mon Profil <span>→</span></div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <span style="color:var(--yellow);font-size:13px;font-weight:600;">👤 MonPseudo</span>
+      </nav>
+      <div class="page-body mobile-body">
+        <p style="font-size:20px;font-weight:700;color:var(--brown);margin-bottom:2px;">Bienvenue !</p>
+        <p style="font-size:12px;color:var(--mid);margin-bottom:14px;">Votre progression Dofus Ocre</p>
+        <div class="stats-row-2col">
+          <div class="stat-card" style="background:var(--brown);padding:14px;"><p class="stat-val" style="font-size:22px;">34/100</p><p class="stat-lbl" style="font-size:11px;">Archis complétés</p></div>
+          <div class="stat-card" style="background:var(--mid);padding:14px;"><p class="stat-val" style="font-size:22px;">127</p><p class="stat-lbl" style="font-size:11px;">Propositions</p></div>
+          <div class="stat-card" style="background:var(--yellow);padding:14px;"><p class="stat-val" style="font-size:22px;color:var(--brown);">42</p><p class="stat-lbl" style="font-size:11px;color:var(--brown);">Échanges</p></div>
+          <div class="stat-card" style="background:var(--red);padding:14px;"><p class="stat-val" style="font-size:22px;">8</p><p class="stat-lbl" style="font-size:11px;">En cours</p></div>
+        </div>
+        <div class="prog-bg sm"><div class="prog-fill" style="width:34%;"></div></div>
+        <p style="font-size:11px;color:var(--mid);margin-bottom:14px;">34 / 100 — 34%</p>
+        <p class="section-title sm">Archimonstres récents</p>
+        <div class="monster-grid-2">
+          <div class="monster-card"><p class="mc-name" style="font-size:14px;">🦟 Moskito</p><p class="mc-sub" style="font-size:11px;">67 exemplaires</p><button class="btn btn-red btn-sm" style="font-size:11px;width:100%;">Proposer</button></div>
+          <div class="monster-card"><p class="mc-name" style="font-size:14px;">🦋 Larve Bleue</p><p class="mc-sub" style="font-size:11px;">12 exemplaires</p><button class="btn btn-yellow btn-sm" style="font-size:11px;width:100%;">Rechercher</button></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
+          <button class="btn btn-yellow btn-full" style="font-size:13px;padding:11px;">La Quête du Dofus Ocre →</button>
+          <button class="btn btn-sm btn-full" style="background:var(--brown);color:var(--yellow);font-size:13px;padding:11px;">Mes Archimonstres →</button>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+        <div><p class="footer-title" style="font-size:13px;">Social</p><div class="footer-social"><span class="soc">in</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 4 — QUÊTE DU DOFUS OCRE
+================================================================ -->
+<div class="page-divider">Page 4 — La Quête du Dofus Ocre</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">Accueil</a><a href="#" style="color:var(--yellow);font-weight:600;">La Quête</a><a href="#">Archimonstres</a><a href="#">Communauté</a></div>
+        <div class="nav-right"><span class="nav-login">👤 MonPseudo</span></div>
+      </nav>
+      <div class="page-body">
+        <p style="font-size:32px;font-weight:700;color:var(--brown);margin-bottom:6px;">La Quête du Dofus Ocre</p>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:24px;">Suivez votre progression et gérez vos archimonstres</p>
+        <div class="quest-hero">
+          <div class="quest-egg">🥚</div>
+          <div class="quest-hero-text">
+            <h2>Progression globale</h2>
+            <p>34 archimonstres complétés sur 100</p>
+            <div class="prog-bg" style="background:rgba(255,255,255,.2);width:600px;"><div class="prog-fill" style="width:34%;"></div></div>
+            <p style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px;">34%</p>
+          </div>
+        </div>
+        <p class="section-title">Étapes de la quête</p>
+        <div class="etape-grid-3">
+          <div class="etape-card" style="border-color:var(--yellow);"><p class="etape-name">🦟 Moskito</p><p class="etape-status" style="color:var(--yellow);">✓ Complété</p><p class="etape-count">Exemplaires: 67</p><div class="etape-actions"><button class="btn btn-red btn-sm">Proposer</button></div></div>
+          <div class="etape-card" style="border-color:var(--mid);"><p class="etape-name">🦋 Larve Bleue</p><p class="etape-status" style="color:var(--mid);">⏳ En cours</p><p class="etape-count">Exemplaires: 12</p><div class="etape-actions"><button class="btn btn-red btn-sm">Proposer</button><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+          <div class="etape-card" style="border-color:#ddd;"><p class="etape-name">🌸 Pissenlit</p><p class="etape-status" style="color:#aaa;">◯ Non commencé</p><p class="etape-count">Exemplaires: 0</p><div class="etape-actions"><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+          <div class="etape-card" style="border-color:var(--yellow);"><p class="etape-name">🦀 Crabe</p><p class="etape-status" style="color:var(--yellow);">✓ Complété</p><p class="etape-count">Exemplaires: 45</p><div class="etape-actions"><button class="btn btn-red btn-sm">Proposer</button></div></div>
+          <div class="etape-card" style="border-color:var(--mid);"><p class="etape-name">🐦 Tofu</p><p class="etape-status" style="color:var(--mid);">⏳ En cours</p><p class="etape-count">Exemplaires: 28</p><div class="etape-actions"><button class="btn btn-red btn-sm">Proposer</button><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+          <div class="etape-card" style="border-color:#ddd;"><p class="etape-name">🧙 Bwork Mage</p><p class="etape-status" style="color:#aaa;">◯ Non commencé</p><p class="etape-count">Exemplaires: 0</p><div class="etape-actions"><button class="btn btn-yellow btn-sm">Rechercher</button></div></div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <span style="color:var(--yellow);font-size:13px;font-weight:600;">👤</span>
+      </nav>
+      <div class="page-body mobile-body">
+        <p style="font-size:18px;font-weight:700;color:var(--brown);margin-bottom:4px;">La Quête du Dofus Ocre</p>
+        <div class="quest-hero" style="padding:16px;margin-bottom:14px;">
+          <div class="quest-egg sm">🥚</div>
+          <div class="quest-hero-text">
+            <h2 class="sm">Progression globale</h2>
+            <p style="font-size:12px;">34 / 100 complétés</p>
+            <div class="prog-bg sm" style="background:rgba(255,255,255,.2);"><div class="prog-fill" style="width:34%;"></div></div>
+          </div>
+        </div>
+        <p class="section-title sm">Étapes</p>
+        <div class="etape-grid-2">
+          <div class="etape-card" style="border-color:var(--yellow);padding:12px;"><p class="etape-name" style="font-size:13px;">🦟 Moskito</p><p class="etape-status" style="color:var(--yellow);font-size:11px;">✓ Complété</p><button class="btn btn-red btn-sm" style="font-size:11px;width:100%;padding:6px;">Proposer</button></div>
+          <div class="etape-card" style="border-color:var(--mid);padding:12px;"><p class="etape-name" style="font-size:13px;">🦋 Larve Bleue</p><p class="etape-status" style="color:var(--mid);font-size:11px;">⏳ En cours</p><button class="btn btn-yellow btn-sm" style="font-size:11px;width:100%;padding:6px;">Rechercher</button></div>
+          <div class="etape-card" style="border-color:#ddd;padding:12px;"><p class="etape-name" style="font-size:13px;">🌸 Pissenlit</p><p class="etape-status" style="color:#aaa;font-size:11px;">◯ Non commencé</p><button class="btn btn-yellow btn-sm" style="font-size:11px;width:100%;padding:6px;">Rechercher</button></div>
+          <div class="etape-card" style="border-color:var(--yellow);padding:12px;"><p class="etape-name" style="font-size:13px;">🦀 Crabe</p><p class="etape-status" style="color:var(--yellow);font-size:11px;">✓ Complété</p><button class="btn btn-red btn-sm" style="font-size:11px;width:100%;padding:6px;">Proposer</button></div>
+          <div class="etape-card" style="border-color:var(--mid);padding:12px;"><p class="etape-name" style="font-size:13px;">🐦 Tofu</p><p class="etape-status" style="color:var(--mid);font-size:11px;">⏳ En cours</p><button class="btn btn-yellow btn-sm" style="font-size:11px;width:100%;padding:6px;">Rechercher</button></div>
+          <div class="etape-card" style="border-color:#ddd;padding:12px;"><p class="etape-name" style="font-size:13px;">🧙 Bwork Mage</p><p class="etape-status" style="color:#aaa;font-size:11px;">◯ Non commencé</p><button class="btn btn-yellow btn-sm" style="font-size:11px;width:100%;padding:6px;">Rechercher</button></div>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 5 — ARCHIMONSTRES
+================================================================ -->
+<div class="page-divider">Page 5 — Archimonstres</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">Accueil</a><a href="#">La Quête</a><a href="#" style="color:var(--yellow);font-weight:600;">Archimonstres</a><a href="#">Communauté</a></div>
+        <div class="nav-right"><span class="nav-login">👤 MonPseudo</span></div>
+      </nav>
+      <div class="page-body">
+        <p style="font-size:32px;font-weight:700;color:var(--brown);margin-bottom:6px;">Archimonstres</p>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:20px;">Gérez votre inventaire pour la Quête du Dofus Ocre</p>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Rechercher un archimonstre…">
+          <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);padding:0 20px;">Filtrer</button>
+          <button class="btn btn-sm" style="background:var(--mid);color:#fff;padding:0 20px;">Trier</button>
+        </div>
+        <div class="monster-grid-3">
+          <div class="monster-card"><p class="mc-name">🦟 Moskito</p><p class="mc-sub">Archimonstre · Zaap</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">67</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🦋 Larve Bleue</p><p class="mc-sub">Archimonstre · Arakne</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">12</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🌸 Pissenlit</p><p class="mc-sub">Archimonstre · Ecaflip</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">0</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🦀 Crabe</p><p class="mc-sub">Archimonstre · Osamodas</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">45</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🐦 Tofu</p><p class="mc-sub">Archimonstre · Feca</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">28</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+          <div class="monster-card"><p class="mc-name">🧙 Bwork Mage</p><p class="mc-sub">Archimonstre · Xelor</p><div class="mc-counter"><button class="ctr-btn">−</button><span class="ctr-val">0</span><button class="ctr-btn">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;">Proposer</button><button class="btn btn-yellow btn-sm" style="flex:1;">Rechercher</button></div></div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <span style="color:var(--yellow);font-size:13px;font-weight:600;">👤</span>
+      </nav>
+      <div class="page-body mobile-body">
+        <p style="font-size:18px;font-weight:700;color:var(--brown);margin-bottom:12px;">Archimonstres</p>
+        <div class="search-bar" style="margin-bottom:12px;">
+          <input class="search-input" type="text" placeholder="Rechercher…" style="font-size:13px;">
+          <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);">Filtrer</button>
+        </div>
+        <div class="monster-grid-2">
+          <div class="monster-card"><p class="mc-name" style="font-size:13px;">🦟 Moskito</p><div class="mc-counter" style="gap:6px;"><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">−</button><span class="ctr-val" style="font-size:14px;">67</span><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;font-size:11px;padding:5px;">Prop.</button><button class="btn btn-yellow btn-sm" style="flex:1;font-size:11px;padding:5px;">Rech.</button></div></div>
+          <div class="monster-card"><p class="mc-name" style="font-size:13px;">🦋 Larve Bleue</p><div class="mc-counter" style="gap:6px;"><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">−</button><span class="ctr-val" style="font-size:14px;">12</span><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;font-size:11px;padding:5px;">Prop.</button><button class="btn btn-yellow btn-sm" style="flex:1;font-size:11px;padding:5px;">Rech.</button></div></div>
+          <div class="monster-card"><p class="mc-name" style="font-size:13px;">🌸 Pissenlit</p><div class="mc-counter" style="gap:6px;"><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">−</button><span class="ctr-val" style="font-size:14px;">0</span><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;font-size:11px;padding:5px;">Prop.</button><button class="btn btn-yellow btn-sm" style="flex:1;font-size:11px;padding:5px;">Rech.</button></div></div>
+          <div class="monster-card"><p class="mc-name" style="font-size:13px;">🦀 Crabe</p><div class="mc-counter" style="gap:6px;"><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">−</button><span class="ctr-val" style="font-size:14px;">45</span><button class="ctr-btn" style="width:24px;height:24px;font-size:14px;">+</button></div><div class="mc-actions"><button class="btn btn-red btn-sm" style="flex:1;font-size:11px;padding:5px;">Prop.</button><button class="btn btn-yellow btn-sm" style="flex:1;font-size:11px;padding:5px;">Rech.</button></div></div>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 6 — PROFIL UTILISATEUR
+================================================================ -->
+<div class="page-divider">Page 6 — Profil utilisateur</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">Accueil</a><a href="#">La Quête</a><a href="#">Archimonstres</a><a href="#">Communauté</a></div>
+        <div class="nav-right"><span class="nav-login" style="color:#fff;font-weight:700;">Mon Profil</span></div>
+      </nav>
+      <div class="page-body">
+        <div class="profile-hero">
+          <div class="avatar">AV</div>
+          <div class="profile-info">
+            <h2>Aventurier123</h2>
+            <p>Membre depuis janvier 2024 · Serveur Imagiro</p>
+            <span class="badge">Chasseur de Dofus</span>
+          </div>
+        </div>
+        <div class="profile-stats-3">
+          <div class="pstat"><p class="pstat-val">34</p><p class="pstat-lbl">Archis complétés</p></div>
+          <div class="pstat"><p class="pstat-val">127</p><p class="pstat-lbl">Propositions</p></div>
+          <div class="pstat"><p class="pstat-val">42</p><p class="pstat-lbl">Échanges réalisés</p></div>
+        </div>
+        <p class="section-title">Informations du compte</p>
+        <div class="field-row">
+          <div class="field-item"><span class="field-lbl">Pseudo</span><span class="field-val">Aventurier123</span></div>
+          <div class="field-item"><span class="field-lbl">Email</span><span class="field-val">aventurier@mail.com</span></div>
+          <div class="field-item"><span class="field-lbl">Serveur Dofus</span><span class="field-val">Imagiro</span></div>
+          <div class="field-item"><span class="field-lbl">Version</span><span class="field-val">Dofus Unity</span></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-yellow btn-sm">✏️ Modifier le profil</button>
+          <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);">🔒 Changer le mot de passe</button>
+          <button class="btn btn-red btn-sm">Déconnexion</button>
+        </div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <span style="color:#fff;font-size:13px;font-weight:600;">Mon Profil</span>
+      </nav>
+      <div class="page-body mobile-body">
+        <div class="profile-hero" style="gap:12px;margin-bottom:14px;">
+          <div class="avatar sm">AV</div>
+          <div class="profile-info">
+            <h2 class="sm">Aventurier123</h2>
+            <p style="font-size:11px;">Serveur Imagiro · Dofus Unity</p>
+            <span class="badge" style="font-size:10px;">Chasseur de Dofus</span>
+          </div>
+        </div>
+        <div class="profile-stats-3" style="gap:8px;margin-bottom:14px;">
+          <div class="pstat" style="padding:10px;"><p class="pstat-val" style="font-size:20px;">34</p><p class="pstat-lbl">Archis</p></div>
+          <div class="pstat" style="padding:10px;"><p class="pstat-val" style="font-size:20px;">127</p><p class="pstat-lbl">Propositons</p></div>
+          <div class="pstat" style="padding:10px;"><p class="pstat-val" style="font-size:20px;">42</p><p class="pstat-lbl">Échanges</p></div>
+        </div>
+        <p class="section-title sm">Mon compte</p>
+        <div class="field-row" style="gap:8px;margin-bottom:14px;">
+          <div class="field-item" style="padding:10px 12px;"><span class="field-lbl" style="font-size:12px;">Pseudo</span><span class="field-val" style="font-size:12px;">Aventurier123</span></div>
+          <div class="field-item" style="padding:10px 12px;"><span class="field-lbl" style="font-size:12px;">Email</span><span class="field-val" style="font-size:12px;">aventurier@mail.com</span></div>
+          <div class="field-item" style="padding:10px 12px;"><span class="field-lbl" style="font-size:12px;">Serveur</span><span class="field-val" style="font-size:12px;">Imagiro</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-yellow btn-full" style="font-size:13px;padding:11px;">✏️ Modifier le profil</button>
+          <button class="btn btn-full btn-sm" style="background:var(--brown);color:var(--yellow);font-size:13px;padding:11px;">🔒 Changer le mot de passe</button>
+          <button class="btn btn-red btn-full" style="font-size:13px;padding:11px;">Déconnexion</button>
+        </div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 7 — RECHERCHE UTILISATEURS
+================================================================ -->
+<div class="page-divider">Page 7 — Recherche d'utilisateurs</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop">
+      <nav class="navbar">
+        <span class="logo">🥚 Metamob</span>
+        <div class="nav-links"><a href="#">Accueil</a><a href="#">La Quête</a><a href="#">Archimonstres</a><a href="#" style="color:var(--yellow);font-weight:600;">Communauté</a></div>
+        <div class="nav-right"><span class="nav-login">👤 MonPseudo</span></div>
+      </nav>
+      <div class="page-body">
+        <p style="font-size:32px;font-weight:700;color:var(--brown);margin-bottom:6px;">Recherche d'utilisateurs</p>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:20px;">Trouvez des partenaires d'échange pour compléter votre collection</p>
+        <div class="search-bar">
+          <input class="search-input" type="text" placeholder="Rechercher un joueur par pseudo…">
+          <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);padding:0 20px;">Rechercher</button>
+          <button class="btn btn-sm" style="background:var(--mid);color:#fff;padding:0 20px;">Filtrer</button>
+        </div>
+        <div class="user-card"><div class="uc-avatar">AV</div><div class="uc-info"><p class="uc-name">Aventurier123</p><p class="uc-sub">Serveur Imagiro · Dofus Unity · Membre depuis jan. 2024</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">34/100</span><button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);margin-left:12px;">Contacter</button></div>
+        <div class="user-card"><div class="uc-avatar" style="background:var(--mid);">DM</div><div class="uc-info"><p class="uc-name">DofusMaster</p><p class="uc-sub">Serveur Brutas · Dofus Retro · Membre depuis mars 2023</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">78/100</span><button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);margin-left:12px;">Contacter</button></div>
+        <div class="user-card"><div class="uc-avatar" style="background:var(--red);">KH</div><div class="uc-info"><p class="uc-name">KraloveHunter</p><p class="uc-sub">Serveur Tylezia · Dofus Unity · Membre depuis juin 2022</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">92/100</span><button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);margin-left:12px;">Contacter</button></div>
+        <div class="user-card"><div class="uc-avatar" style="background:var(--brown);">OQ</div><div class="uc-info"><p class="uc-name">OcreQuester</p><p class="uc-sub">Serveur Imagiro · Dofus Touch · Membre depuis déc. 2024</p></div><span class="uc-badge" style="background:var(--mid);color:#fff;">21/100</span><button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);margin-left:12px;">Contacter</button></div>
+        <div class="user-card"><div class="uc-avatar" style="background:var(--yellow);color:var(--brown);">MF</div><div class="uc-info"><p class="uc-name">MoskitoFarm</p><p class="uc-sub">Serveur Brutas · Dofus Unity · Membre depuis août 2023</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);">55/100</span><button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);margin-left:12px;">Contacter</button></div>
+      </div>
+      <footer class="footer">
+        <div><p class="footer-title">Information</p><p class="footer-links">Contact · FAQ</p></div>
+        <div><p class="footer-title">Social Medias</p><div class="footer-social"><span class="soc">in</span><span class="soc">fb</span><span class="soc">yt</span></div></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile">
+      <nav class="navbar mobile-nav">
+        <span class="logo sm">🥚 Metamob</span>
+        <span style="color:var(--yellow);font-size:13px;font-weight:600;">👤</span>
+      </nav>
+      <div class="page-body mobile-body">
+        <p style="font-size:18px;font-weight:700;color:var(--brown);margin-bottom:12px;">Recherche d'utilisateurs</p>
+        <div class="search-bar" style="margin-bottom:12px;">
+          <input class="search-input" type="text" placeholder="Rechercher un joueur…" style="font-size:13px;">
+          <button class="btn btn-sm" style="background:var(--brown);color:var(--yellow);white-space:nowrap;">Chercher</button>
+        </div>
+        <div class="user-card" style="padding:10px 12px;gap:10px;"><div class="uc-avatar" style="width:38px;height:38px;font-size:14px;">AV</div><div class="uc-info"><p class="uc-name" style="font-size:13px;">Aventurier123</p><p class="uc-sub" style="font-size:11px;">Imagiro · Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);font-size:10px;">34/100</span></div>
+        <div class="user-card" style="padding:10px 12px;gap:10px;"><div class="uc-avatar" style="width:38px;height:38px;font-size:14px;background:var(--mid);">DM</div><div class="uc-info"><p class="uc-name" style="font-size:13px;">DofusMaster</p><p class="uc-sub" style="font-size:11px;">Brutas · Retro</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);font-size:10px;">78/100</span></div>
+        <div class="user-card" style="padding:10px 12px;gap:10px;"><div class="uc-avatar" style="width:38px;height:38px;font-size:14px;background:var(--red);">KH</div><div class="uc-info"><p class="uc-name" style="font-size:13px;">KraloveHunter</p><p class="uc-sub" style="font-size:11px;">Tylezia · Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);font-size:10px;">92/100</span></div>
+        <div class="user-card" style="padding:10px 12px;gap:10px;"><div class="uc-avatar" style="width:38px;height:38px;font-size:14px;">OQ</div><div class="uc-info"><p class="uc-name" style="font-size:13px;">OcreQuester</p><p class="uc-sub" style="font-size:11px;">Imagiro · Touch</p></div><span class="uc-badge" style="background:var(--mid);color:#fff;font-size:10px;">21/100</span></div>
+        <div class="user-card" style="padding:10px 12px;gap:10px;"><div class="uc-avatar" style="width:38px;height:38px;font-size:14px;background:var(--yellow);color:var(--brown);">MF</div><div class="uc-info"><p class="uc-name" style="font-size:13px;">MoskitoFarm</p><p class="uc-sub" style="font-size:11px;">Brutas · Unity</p></div><span class="uc-badge" style="background:var(--yellow);color:var(--brown);font-size:10px;">55/100</span></div>
+      </div>
+      <footer class="footer mobile-footer">
+        <div><p class="footer-title" style="font-size:13px;">Information</p><p class="footer-links" style="font-size:12px;">Contact</p></div>
+      </footer>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     PAGE 8 — MAIL D'INSCRIPTION
+================================================================ -->
+<div class="page-divider">Page 8 — Mail d'inscription</div>
+<div class="page-row">
+
+  <div class="col">
+    <div class="label">Desktop — 1440px</div>
+    <div class="desktop" style="background:#e8e0d8;">
+      <div style="padding:40px;display:flex;justify-content:center;">
+        <div class="mail-card" style="max-width:600px;">
+          <div class="mail-header">
+            <div class="mail-logo">🥚 Metamob</div>
+            <p class="mail-tagline">Votre compagnon pour la Quête du Dofus Ocre</p>
+          </div>
+          <div class="mail-body">
+            <p class="mail-greeting">Bonjour Aventurier123,</p>
+            <p class="mail-text">Bienvenue sur <strong>Metamob</strong> ! Votre compte a bien été créé. Pour finaliser votre inscription et accéder à toutes les fonctionnalités de la plateforme, veuillez confirmer votre adresse email en utilisant le code de confirmation ci-dessous :</p>
+            <div class="mail-code-box">
+              <p style="font-size:12px;color:#999;margin-bottom:8px;">Code de confirmation (valable 24 heures)</p>
+              <p class="mail-code-val">947 261</p>
+            </div>
+            <p class="mail-text">Ou cliquez directement sur le bouton ci-dessous pour confirmer votre adresse :</p>
+            <button class="btn btn-yellow btn-full" style="padding:16px;font-size:16px;">✓ Confirmer mon adresse email</button>
+            <p style="font-size:13px;color:#aaa;margin-top:18px;line-height:1.65;">Si vous n'avez pas créé de compte sur Metamob, ignorez simplement cet email. Votre adresse ne sera pas utilisée sans votre confirmation.</p>
+          </div>
+          <div class="mail-footer">
+            <p>© 2025 Metamob · Tous droits réservés</p>
+            <p style="margin-top:4px;"><a href="#" style="color:#aaa;">Se désabonner</a> · <a href="#" style="color:#aaa;">Politique de confidentialité</a> · <a href="#" style="color:#aaa;">Nous contacter</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="label">Mobile — 390px</div>
+    <div class="mobile" style="background:#e8e0d8;">
+      <div style="padding:16px;">
+        <div class="mail-card">
+          <div class="mail-header" style="padding:20px;">
+            <div class="mail-logo" style="font-size:20px;">🥚 Metamob</div>
+            <p class="mail-tagline" style="font-size:12px;">Compagnon de la Quête du Dofus Ocre</p>
+          </div>
+          <div class="mail-body" style="padding:20px;">
+            <p class="mail-greeting" style="font-size:15px;">Bonjour Aventurier123,</p>
+            <p class="mail-text" style="font-size:13px;">Bienvenue sur <strong>Metamob</strong> ! Confirmez votre adresse email pour accéder à toutes les fonctionnalités.</p>
+            <div class="mail-code-box" style="padding:16px;">
+              <p style="font-size:11px;color:#999;margin-bottom:6px;">Code de confirmation</p>
+              <p class="mail-code-val" style="font-size:28px;letter-spacing:8px;">947 261</p>
+              <p style="font-size:11px;color:#aaa;margin-top:4px;">Valable 24 heures</p>
+            </div>
+            <button class="btn btn-yellow btn-full" style="padding:13px;font-size:14px;">✓ Confirmer mon email</button>
+            <p style="font-size:11px;color:#aaa;margin-top:14px;line-height:1.6;">Si vous n'avez pas créé de compte, ignorez cet email.</p>
+          </div>
+          <div class="mail-footer" style="padding:12px 20px;">
+            <p style="font-size:11px;">© 2025 Metamob</p>
+            <p style="margin-top:3px;font-size:10px;"><a href="#" style="color:#aaa;">Se désabonner</a> · <a href="#" style="color:#aaa;">Confidentialité</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
